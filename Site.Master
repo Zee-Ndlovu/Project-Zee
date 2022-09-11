@@ -1,0 +1,376 @@
+﻿
+<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site.master.cs" Inherits="NonkosiBoutique.SiteMaster" %>
+
+<!DOCTYPE html>
+
+<html lang="en">
+<head runat="server">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <script src='https://kit.fontawesome.com/a076d05399.js'></script>
+    <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <title><%: Page.Title %> - My ASP.NET Application</title>
+
+    <asp:PlaceHolder runat="server">
+        <%: Scripts.Render("~/bundles/modernizr") %>
+    </asp:PlaceHolder>
+    <webopt:bundlereference runat="server" path="~/Content/css" />
+    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        /*! dropdown*/
+        .dropdown {
+            height: 10vh;
+            width: 80%;
+            margin: auto;
+            display: flex;
+            justify-content: unset;
+            align-items:center;
+        }
+
+        .projects,
+        .products {
+          position: relative;
+        }
+
+        .projects ul,
+        .products ul {
+          margin-top: 10px;
+          position: absolute;
+          display: flex;
+          justify-content: unset;
+          flex-direction: column;
+          width: 200px;
+          height: 200px;
+          background: white;
+          list-style: none;
+          border-radius: 0px;
+          opacity: 0;
+          pointer-events: none;
+          transform: translateY(-10px);
+          transition: all 0.4s ease;
+        }
+        .projects li,
+        .products li {
+          width: 100%;
+          height: 30%;
+          display: flex;
+          justify-content: unset ;
+          align-items:unset;
+          text-align:center;
+        }
+
+        .projects li:hover,
+        .products li:hover {
+          background-color: #E3E3E4;
+        }
+
+        .projects a,
+        .products a {
+          color: black;
+          text-decoration: none;
+        }
+
+        .dropdown button:hover
+        {
+          opacity: 1;
+          pointer-events: all;
+          transform: translateY(0px);
+        }
+        .dropdown button,
+        .home,a {
+          background: none;
+          text-decoration: none;
+          border: none;
+          color: black;
+          font-size: 18px;
+          text-align:center;
+          cursor: pointer;
+        }
+
+        .projects button:focus + ul,
+        .products button:focus + ul {
+          opacity: 1;
+          pointer-events: all;
+          transform: translateY(0px);
+        }
+        
+        /*Footer*/
+        .container2{
+            background-color:black;
+        }
+        .footer{
+            width: 80%;
+            height: 40vh;
+            background-color: black;
+            color: white;
+            display: flex;
+            justify-content: center;
+            margin: 0 auto;
+        }
+    
+        hrr{
+            margin-bottom: 2rem;
+        }
+        af{
+            text-decoration: none;
+            margin-bottom: 0.5rem;
+        }
+ 
+        af:hover{
+            color: red;
+            transition: 0.3s ease-out;
+        }
+        .fa {
+              padding: 20px;
+              font-size: 30px;
+              width: 50px;
+              text-align: center;
+              text-decoration: none;
+        }
+
+        .fa:hover {
+            opacity: 0.7;
+        }
+
+        .fa-facebook {
+            background: black;
+            color: white;
+        }
+
+        .fa-twitter {
+            background:black ;
+            color: white;
+        }
+
+        .fa-linkedin {
+            background:black ;
+            color: white;
+        }
+
+        .fa-youtube {
+            background:black ;
+            color: white;
+        }
+
+        .fa-instagram {
+            background:black ;
+            color: white;
+        }
+
+        /* The Modal (background) */
+        .modal {
+          display: none; /* Hidden by default */
+          position: fixed; /* Stay in place */
+          z-index: 1; /* Sit on top */
+          padding-top: 100px; /* Location of the box */
+          left: 0;
+          top: 0;
+          width: 100%; /* Full width */
+          height: 100%; /* Full height */
+          overflow: auto; /* Enable scroll if needed */
+          background-color: rgb(0,0,0); /* Fallback color */
+          background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+        }
+
+        /* Modal Content */
+        .modal-content {
+          background-color: #fefefe;
+          margin: auto;
+          padding: 20px;
+          border: 1px solid #888;
+          width: 80%;
+        }
+
+        /* The Close Button */
+        .close {
+          color: #aaaaaa;
+          float: right;
+          font-size: 28px;
+          font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+          color: #000;
+          text-decoration: none;
+          cursor: pointer;
+        }
+    
+    </style>
+</head>
+<body>
+    <form runat="server">
+
+        <asp:ScriptManager runat="server">
+            <Scripts>
+                <%--To learn more about bundling scripts in ScriptManager see http://go.microsoft.com/fwlink/?LinkID=301884 --%>
+                <%--Framework Scripts--%>
+                <asp:ScriptReference Name="MsAjaxBundle" />
+                <asp:ScriptReference Name="jquery" />
+                <asp:ScriptReference Name="bootstrap" />
+                <asp:ScriptReference Name="respond" />
+                <asp:ScriptReference Name="WebForms.js" Assembly="System.Web" Path="~/Scripts/WebForms/WebForms.js" />
+                <asp:ScriptReference Name="WebUIValidation.js" Assembly="System.Web" Path="~/Scripts/WebForms/WebUIValidation.js" />
+                <asp:ScriptReference Name="MenuStandards.js" Assembly="System.Web" Path="~/Scripts/WebForms/MenuStandards.js" />
+                <asp:ScriptReference Name="GridView.js" Assembly="System.Web" Path="~/Scripts/WebForms/GridView.js" />
+                <asp:ScriptReference Name="DetailsView.js" Assembly="System.Web" Path="~/Scripts/WebForms/DetailsView.js" />
+                <asp:ScriptReference Name="TreeView.js" Assembly="System.Web" Path="~/Scripts/WebForms/TreeView.js" />
+                <asp:ScriptReference Name="WebParts.js" Assembly="System.Web" Path="~/Scripts/WebForms/WebParts.js" />
+                <asp:ScriptReference Name="Focus.js" Assembly="System.Web" Path="~/Scripts/WebForms/Focus.js" />
+                <asp:ScriptReference Name="WebFormsBundle" />
+                <%--Site Scripts--%>
+            </Scripts>
+        </asp:ScriptManager>
+         
+        <div class="navbar-fixed-top" style="background-color:white">
+            <div class="dropdown">
+                <div class="projects" style="margin-right: 2cm;font-size: 40px;width: 1500px; text-align:left">
+                    <h1>NonkosiBoutique</h1> 
+                </div>
+                <div class="row" style="margin-right: 0.8cm">
+                    <table class="col-md-4">
+                        <tr>
+                            <td><asp:TextBox ID="SearcBox" runat="server" href="~/items" class="form-control mr-sm-2" style="width:450px" type="search" placeholder="Search" aria-label="Search" OnTextChanged="SearcBox_TextChanged"></asp:TextBox></td>
+                            <td><asp:LinkButton ID="LinkButton1" runat="server" OnClick="LinkButton1_Click"><i class="material-icons">search</i></asp:LinkButton></td>
+                        </tr>
+                    </table>
+                    <asp:SqlDataSource ID="SearchSql" runat="server" ConnectionString="<%$ ConnectionStrings:group8ConnectionString %>" SelectCommand="SELECT outfitType.outfitTypeName AS Expr1, outfitType.outfitTypeName, outfitType.fubric, outfit.price, outfit.color, outfit.size, outfit.depositPrice, outfit.Qty, outfit.description, outfit.outfitAvailability, brand.brandName FROM outfitType INNER JOIN outfit ON outfitType.outfitType_id = outfit.outfitType_id INNER JOIN brand ON outfit.brand_id = brand.brand_id WHERE (outfitType.outfitTypeName LIKE '%' + @name + '%')">
+                        <SelectParameters>
+                            <asp:ControlParameter ControlID="SearcBox" Name="name" PropertyName="Text" />
+                        </SelectParameters>
+                    </asp:SqlDataSource>
+                </div>
+                <div class="products" style="margin-right: 0.4cm">
+                    <asp:LinkButton ID="historyBookings" title="Your Fovarites" runat="server" OnClick="historyBookings_Click"><i class='far fa-heart' style='font-size:24px'></i></asp:LinkButton>
+                </div>
+                <div class="w3-dropdown-hover" style="margin-right: 0.4cm">
+                    <button type="button"><i class="material-icons w3-xxlarge" style='font-size:24px'>person</i></button> 
+                    <asp:LoginView runat="server" ViewStateMode="Disabled">
+                        <AnonymousTemplate>
+                            <div  class="w3-dropdown-content w3-bar-block w3-card-4" style="width:200px;">
+                                <a runat="server" href="~/Account/Login" style="margin-left:1cm">Login</a><br />
+                                <a runat="server" href="~/Account/Register" style="margin-left:1cm">Register</a>
+                            </div>
+                        </AnonymousTemplate>
+                        <LoggedInTemplate>
+                            <div  class="w3-dropdown-content w3-bar-block w3-card-4" style="width:200px;">
+                                <a runat="server" href="~/User/MyAccount" style="margin-left:1cm" title="Manage your account">My Account</a><br />
+                                <a runat="server" href="~/User/HistoryBookings" style="margin-left:1cm" title="Manage your account">History Orders</a>
+                                <hr />
+                                <asp:LoginStatus runat="server" style="margin-left:1cm" LogoutAction="Redirect" LogoutText="Log off" LogoutPageUrl="~/" OnLoggingOut="Unnamed_LoggingOut" />
+                            </div>
+                        </LoggedInTemplate>
+                    </asp:LoginView>
+                    
+                </div>
+                <div class="products" style="margin-right: 0.2cm">
+                    <asp:LinkButton ID="Cart" title="Your booking cart" runat="server" OnClick="Cart_Click"><i class='fas fa-shopping-basket' style='font-size:24px'></i></asp:LinkButton>
+                </div>
+                <div class="products" style="margin-right: 1cm">
+                    <asp:LinkButton ID="Checkout" runat="server" OnClick="Checkout_Click" style='font-size:18px;color:black; background-color:transparent; border: 2px solid black;  padding: 10px 50px; text-align: center;'>Checkout</asp:LinkButton>
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="navbar navbar-inverse" style="background-color:#E3E3E4; margin-top:0.3cm">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="icon-bar" style="color:black"></span>
+                        <span class="icon-bar" style="color:black"></span>
+                        <span class="icon-bar" style="color:black"></span>
+                    </button>
+                </div>
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav" >
+                        <li class="w3-xxlarge"><a class="fa fa-home" runat="server" href="~/" style="color:black; margin-right:0.5px; margin-top:7px"></a></li>
+                    </ul>
+                    <div class="dropdown">
+        
+                        <div class="w3-dropdown-hover" style="margin-right: 1cm;">
+                            <asp:Button class="w3-button" ID="Button1" runat="server" Text="Outfit" />
+                            
+                            <div class="w3-dropdown-content w3-bar-block w3-border" style="margin-right: 1cm;width:200px">
+                                <asp:LinkButton class="w3-bar-item w3-button" ID="LinkButton6" runat="server" OnClick="LinkButton6_Click">Wedding Gowns</asp:LinkButton>
+                                <asp:LinkButton class="w3-bar-item w3-button" ID="LinkButton8" runat="server" OnClick="LinkButton8_Click">Shoes</asp:LinkButton>
+                                <asp:LinkButton class="w3-bar-item w3-button" ID="LinkButton7" runat="server" OnClick="LinkButton7_Click">Dress</asp:LinkButton>
+                                <asp:LinkButton class="w3-bar-item w3-button" ID="LinkButton2" runat="server" OnClick="LinkButton2_Click">Suit</asp:LinkButton>
+                            </div>
+                        </div>
+                        <div class="w3-dropdown-hover" style="margin-right: 1cm" >
+                            <button class="w3-button" type="button">Decoration</button>
+                            <div class="w3-dropdown-content w3-bar-block w3-border" style="margin-right: 1cm;width:200px">
+                                <asp:LinkButton ID="Package1" class="w3-bar-item w3-button" runat="server" OnClick="Package1_Click">Package1</asp:LinkButton>
+                                <asp:LinkButton ID="Package2" class="w3-bar-item w3-button" runat="server" OnClick="Package2_Click">Package2</asp:LinkButton>
+                                <asp:LinkButton ID="Package3" class="w3-bar-item w3-button" runat="server" OnClick="Package3_Click">Package3</asp:LinkButton>
+                                <asp:LinkButton ID="Package4" class="w3-bar-item w3-button" runat="server" OnClick="Package4_Click">Package4</asp:LinkButton>
+                                <asp:LinkButton ID="Package5" class="w3-bar-item w3-button" runat="server" OnClick="Package5_Click">Package5</asp:LinkButton>
+                            </div>
+                        </div>
+                        <div class="products" style="margin-right: 1cm">
+                            <a runat="server" href="~/About">About</a>
+                        </div>
+                        <div class="products" style="margin-right: 1cm">
+                            <a runat="server" href="~/Contact">Contact</a>
+                        </div>
+                        <div class="nav navbar-nav navbar-right">
+                            <asp:LoginView runat="server" ViewStateMode="Disabled">
+                                <LoggedInTemplate>
+                                    <a runat="server" href="~/User/MyAccount" title="Manage your account">Hello, <%: Context.User.Identity.GetUserName()  %> !</a>                                    </div>
+                                </LoggedInTemplate>
+                            </asp:LoginView>
+                        </div>
+                    </div>
+                </div>        
+           </div>
+        </div>
+        
+        <div class="container body-content">
+            <asp:ContentPlaceHolder ID="MainContent" runat="server">
+            </asp:ContentPlaceHolder>
+            <hr /> 
+        </div>
+    </form>
+    
+    <footer class="footerd">
+        <div class="container2">
+            <div class="footer">
+                <div class="col-md-4">
+                    <h2 class ="hrr">About Us</h2>
+                    <p>Nonkosi Boutique specializes in renting out wedding outfits, graduation and other special event outfits, as well as sewing outfits if requested.</p>
+                    <hr />
+                    <a href="https://www.facebook.com/NonkosiWeddings/" class="fa fa-facebook"></a>
+                    <a href="#" class="fa fa-twitter"></a>
+                    <a href="#" class="fa fa-linkedin"></a>
+                    <a href="https://www.instagram.com/p/BzKMeR2lV1S/?hl=en" class="fa fa-instagram"></a>
+                </div>
+                <div class="col-md-4">
+                    <h2 class ="hrr">Quick Link</h2>
+                    <ul style="list-style-type:none">
+                        <li><a class="af" runat="server" href="~/" style="color: white;">Home</a></li>
+                        <li><a class="af" runat="server" href="~/About" style="color: white;">About</a></li>
+                        <li><a class="af" href="#" style="color: white;">Help</a></li>
+                        <li><a class="af" runat="server" href="~/TermsConditions" style="color: white;">Term and Condition</a></li>
+                        <li><a class="af" runat="server" href="~/Contact" style="color: white;">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h2 class ="hrr">Contact Us</h2>
+                    <ul style="list-style-type:none">
+                        <li> <i style='font-size:15px;color:grey;margin-left:4px' class='fas'>&#xf3c5;</i>176 Langalibale</li>
+                        <li style="margin-left:15px">street</li>
+                        <li style="margin-left:15px">Thanet House</li>
+                        <li style="margin-left:15px">PMB</li>
+                        <li><i style='font-size:15px;color:grey;margin-left:4px' class='fas'>&#xf095;</i>+27 81 753 9722</li>
+                        <li><i style="font-size:15px ;color:grey" class="fa">&#xf0e0;</i>xabanonhle@yahoo.com</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
